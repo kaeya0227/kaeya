@@ -129,7 +129,10 @@
     "link",
     "research_question",
     "motivation",
+    "background",
+    "data_source",
     "innovation",
+    "content",
     "mechanism",
     "data_and_method",
     "main_findings",
@@ -138,6 +141,8 @@
     "evidence_note"
   ],
   "rules": [
+    "Every selected paper should receive the full structured deep-summary format; do not split the daily list into detailed and brief cards.",
+    "For each paper, clearly separate research motivation, research background, data source, innovation, concrete paper content, mechanism, findings, relevance, and evidence limits.",
     "Do not fabricate papers, authors, links, abstracts, or findings.",
     "If only title or metadata is available, mark evidence as limited and avoid inventing conclusions.",
     "For arXiv, include only economics, finance, social science application, policy evaluation, text-as-data, or econometrics-related work."

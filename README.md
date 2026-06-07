@@ -1,32 +1,74 @@
-# Kaeya
+# Kaeya Literature Radar
 
-经济学文献雷达网页。当前版本是可部署的静态网页原型，后续由 Codex 自动化或 GitHub Actions 更新文献数据。
+这是一个面向经济学、金融学和管理学文献追踪的 GitHub Pages 网页。
 
-## 当前包含
+当前版本已经改成数据驱动结构：网页负责展示，文献数据放在 JSON 文件里。这个文件夹是“新仓库直接上传版”，`index.html` 已经放在仓库根目录，适合 GitHub Pages 从 `main / root` 直接发布。
 
-- `web/index.html`: 文献雷达网页
-- `config/interests.json`: 研究兴趣、来源和期刊池配置
-- `.github/workflows/pages.yml`: GitHub Pages 发布工作流
+当前皮肤使用凯亚 2023 生日图作为个人学习页背景，并搭配冰蓝、深蓝、银白和少量金色/酒红色。
 
-## 部署到 GitHub Pages
-
-1. 把本文件夹内容上传到 `kaeya0227/kaeya` 仓库。
-2. 打开 GitHub 仓库的 `Settings -> Pages`。
-3. 在 `Build and deployment` 里把 `Source` 设为 `GitHub Actions`。
-4. 打开 `Actions -> Deploy Pages`，手动运行一次，或等待下一次 push 自动运行。
-
-发布后网页通常在：
+## 文件结构
 
 ```text
-https://kaeya0227.github.io/kaeya/
+index.html
+assets/kaeya-birthday-2023.png
+data/latest.json
+data/runs.json
+data/archive/2026-06-07.json
+config/interests.json
 ```
 
-## 自动更新路线
+## 数据更新方式
 
-第一阶段建议使用 Codex 自动化生成文献卡片，然后更新这个仓库里的网页文件。这样可以保留 Codex 的总结能力，同时用 GitHub Pages 展示网页。
+网页默认读取：
 
-如果以后改为纯 GitHub Actions 云端抓取和总结，则需要配置模型 API Key。不要把 API Key 写进仓库文件，应放在 GitHub `Settings -> Secrets and variables -> Actions -> Secrets`。
+```text
+data/latest.json
+```
+
+如果这个文件暂时读取失败，网页会退回到 HTML 内置的示例数据，避免页面空白。
+
+历史归档页会读取：
+
+```text
+data/runs.json
+```
+
+只要 `runs.json` 里记录了某天的归档路径，例如 `data/archive/2026-06-07.json`，网页上的日期就可以点击，并会载入那一天保存下来的完整文献卡片。
+
+每天自动化应该更新：
+
+```text
+data/latest.json
+data/archive/YYYY-MM-DD.json
+data/runs.json
+```
+
+## GitHub Pages
+
+GitHub Pages 地址：
+
+```text
+https://你的用户名.github.io/你的新仓库名/
+```
+
+仓库设置应为：
+
+```text
+Settings -> Pages -> Source -> Deploy from a branch
+Branch -> main
+Folder -> / (root)
+```
+
+## Codex 自动化目标
+
+每天上午 9 点，Codex 自动化应：
+
+1. 检索 NBER、SSRN、arXiv、英文期刊、中文期刊等来源。
+2. 筛选约 20 篇经济学、金融学、管理学相关论文。
+3. 生成中文文献卡片；每篇都按完整精读摘要标准写清研究动机、研究背景、数据来源、创新之处、具体文章内容、机制路径、主要发现、与你的关系和证据边界。
+4. 不编造论文、作者、链接、摘要或结论。
+5. 只更新 `data/*.json`。
 
 ## 版权提示
 
-如果后续加入凯亚主题，请优先使用抽象冰元素、冰神之眼风格、深蓝银白色系和自制/授权图片。公开网页不要直接使用未授权角色立绘。
+凯亚主题图仅用于个人非商业学习页展示。若页面未来用于公开传播、论文项目主页或商业用途，建议改成自制/授权图片或抽象冰元素背景。
